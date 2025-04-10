@@ -9,6 +9,7 @@ export default function Home({ products }) {
   const [selectedCategories, setSelectedCategories] = useState([])
   const [searchQuery, setSearchQuery] = useState("")
   const [currentPage, setCurrentPage] = useState(1)
+  const [sortOption, setSortOption] = useState("recommended")
 
   const handleFilterChange = (category, checked) => {
     setSelectedCategories((prev) =>
@@ -17,18 +18,25 @@ export default function Home({ products }) {
     setCurrentPage(1)
   }
 
-  const filteredProducts = products.filter((product) => {
-    const titleMatch = product.title.toLowerCase().includes(searchQuery.toLowerCase())
-    const categoryMatch = product.category.toLowerCase().includes(searchQuery.toLowerCase())
-    const searchMatch = titleMatch || categoryMatch
+  const filteredProducts = products
+    .filter((product) => {
+      const titleMatch = product.title.toLowerCase().includes(searchQuery.toLowerCase())
+      const categoryMatch = product.category.toLowerCase().includes(searchQuery.toLowerCase())
+      const searchMatch = titleMatch || categoryMatch
 
-    if (searchQuery) return searchMatch
+      if (searchQuery) return searchMatch
 
-    const categoryFilterMatch =
-      selectedCategories.length === 0 || selectedCategories.includes(product.category)
+      const categoryFilterMatch =
+        selectedCategories.length === 0 || selectedCategories.includes(product.category)
 
-    return categoryFilterMatch
-  })
+      return categoryFilterMatch
+    })
+    .sort((a, b) => {
+      if (sortOption === "priceHigh") return b.price - a.price
+      if (sortOption === "priceLow") return a.price - b.price
+      // Other sort options like 'newest' or 'popular' can be handled here later
+      return 0 // Default (recommended)
+    })
 
   const productsPerPage = 6
   const totalPages = Math.ceil(filteredProducts.length / productsPerPage)
@@ -46,10 +54,38 @@ export default function Home({ products }) {
         />
 
         <main className={styles.main}>
-          <h2 className={styles.title}>DISCOVER OUR PRODUCTS</h2>
-          <p className={styles.subtitle}>Lorem ipsum dolor sit amet consectetur. Amet est posuere rhoncus  <br></br> scelerisque. 
-          Dolor integer scelerisque nibh amet mi ut elementum dolor</p>
+          {/* Top bar with item count and sort dropdown */}
+         
 
+          <h2 className={styles.title}>DISCOVER OUR PRODUCTS</h2>
+          <p className={styles.subtitle}>
+            Lorem ipsum dolor sit amet consectetur. Amet est posuere rhoncus <br />
+            scelerisque. Dolor integer scelerisque nibh amet mi ut elementum dolor
+          </p>
+          <div className={styles.topBar}>
+            <div className={styles.itemsCount}>
+              <h4>{filteredProducts.length} ITEMS</h4>
+            </div>
+
+            <div className={styles.sortWrapper}>
+              <label htmlFor="sort" className={styles.sortLabel}>
+                <strong>RECOMMENDED :</strong>
+              </label>
+            
+              <select
+                id="sort"
+                className={styles.sortSelect}
+                value={sortOption}
+                onChange={(e) => setSortOption(e.target.value)}
+              >
+                <option value="recommended">RECOMMENDED</option>
+                <option value="newest">NEWEST FIRST</option>
+                <option value="popular">POPULAR</option>
+                <option value="priceHigh">PRICE : HIGH TO LOW</option>
+                <option value="priceLow">PRICE : LOW TO HIGH</option>
+              </select>
+            </div>
+          </div>
           <section className={styles.grid}>
             {paginatedProducts.length > 0 ? (
               paginatedProducts.map((product) => (
@@ -60,7 +96,6 @@ export default function Home({ products }) {
             )}
           </section>
 
-    
           <div className={styles.pagination}>
             {Array.from({ length: totalPages }, (_, i) => (
               <button

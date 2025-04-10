@@ -1,3 +1,15 @@
+.topBar {
+  display: flex;
+  justify-content: space-between; /* adds space between the items */
+  align-items: center;            /* vertically aligns items */
+  padding: 10px 0;                /* optional padding */
+  gap: 20px;                      /* adds a gap between children */
+}
+
+.itemsCount h4,
+.sortLabel h4 {
+  margin: 0; /* remove default margin for better alignment */
+}
 
 .main {
   flex: 1;
