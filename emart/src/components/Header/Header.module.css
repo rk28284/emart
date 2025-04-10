@@ -1,0 +1,21 @@
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 1rem;
+    background-color: #0d0d0d;
+    color: white;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
+  }
+  .search {
+    padding: 0.5rem;
+    border-radius: 4px;
+    border: none;
+    font-size: 1rem;
+    width: 200px;
+  }
+  
