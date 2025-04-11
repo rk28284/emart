@@ -29,8 +29,10 @@
 
 
 <h2>📦 Installation</h2>
+
 <pre>
 <code>
+  .
 # Clone the repo
 git clone https://github.com/rk28284/emart.git
 
