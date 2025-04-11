@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import styles from '../Header/Header.module.css';
-import logo from '../../../public/7494284.jpg'
 
 export const Header = ({ searchQuery, setSearchQuery }) => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -12,10 +11,8 @@ export const Header = ({ searchQuery, setSearchQuery }) => {
   return (
     <header className={styles.header}>
 
-      {/* Center - Brand Name */}
       <h1 className={styles.logo}>LOGO</h1>
 
-      {/* Navigation Links */}
       <nav
         className={`${styles.navLinks} ${menuOpen ? styles.showMenu : ''}`}
         aria-label="Main Navigation"
@@ -27,7 +24,6 @@ export const Header = ({ searchQuery, setSearchQuery }) => {
         <a href="#">CONTACT US</a>
       </nav>
 
-      {/* Right Icons */}
       <div className={styles.rightSection}>
         <span title="Search">🔍</span>
         <span title="Wishlist">♡</span>
@@ -36,7 +32,6 @@ export const Header = ({ searchQuery, setSearchQuery }) => {
         <span title="Language">ENG ▾</span>
       </div>
 
-      {/* Search Input */}
       <input
         type="text"
         placeholder="Search products..."
@@ -46,7 +41,6 @@ export const Header = ({ searchQuery, setSearchQuery }) => {
         aria-label="Search products"
       />
 
-      {/* Hamburger Toggle */}
       <button
         className={styles.hamburger}
         onClick={toggleMenu}

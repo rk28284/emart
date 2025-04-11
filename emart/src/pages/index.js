@@ -10,6 +10,8 @@ export default function Home({ products }) {
   const [searchQuery, setSearchQuery] = useState("")
   const [currentPage, setCurrentPage] = useState(1)
   const [sortOption, setSortOption] = useState("recommended")
+  const [sidebartogle, setSidebartoggle] = useState(true)
+
 
   const handleFilterChange = (category, checked) => {
     setSelectedCategories((prev) =>
@@ -34,8 +36,8 @@ export default function Home({ products }) {
     .sort((a, b) => {
       if (sortOption === "priceHigh") return b.price - a.price
       if (sortOption === "priceLow") return a.price - b.price
-      // Other sort options like 'newest' or 'popular' can be handled here later
-      return 0 // Default (recommended)
+      
+      return 0 
     })
 
   const productsPerPage = 6
@@ -48,30 +50,41 @@ export default function Home({ products }) {
   return (
     <Layout searchQuery={searchQuery} setSearchQuery={setSearchQuery}>
       <div className={styles.container}>
-        <Sidebar
-          selectedCategories={selectedCategories}
-          onFilterChange={handleFilterChange}
-        />
+     
+      {sidebartogle ? (
+  <Sidebar
+    selectedCategories={selectedCategories}
+    onFilterChange={handleFilterChange}
+  />
+) : null}
 
         <main className={styles.main}>
-          {/* Top bar with item count and sort dropdown */}
          
-
-          <h2 className={styles.title}>DISCOVER OUR PRODUCTS</h2>
+<div className={styles.decript_main}>
+<h2 className={styles.title}>DISCOVER OUR PRODUCTS</h2>
           <p className={styles.subtitle}>
-            Lorem ipsum dolor sit amet consectetur. Amet est posuere rhoncus <br />
+            Lorem ipsum dolor sit amet consectetur. Amet est posuere rhoncus 
             scelerisque. Dolor integer scelerisque nibh amet mi ut elementum dolor
           </p>
+</div>
+          
           <div className={styles.topBar}>
             <div className={styles.itemsCount}>
               <h4>{filteredProducts.length} ITEMS</h4>
             </div>
+<div>
+<button 
+className={styles.sidetogglebtn}
+  onClick={() => setSidebartoggle(!sidebartogle)}
+>
+  {sidebartogle ? "Hide Filter" : "Show Filter"}
+</button>
 
+              </div>
+             
+              
             <div className={styles.sortWrapper}>
-              <label htmlFor="sort" className={styles.sortLabel}>
-                <strong>RECOMMENDED :</strong>
-              </label>
-            
+        
               <select
                 id="sort"
                 className={styles.sortSelect}
@@ -85,7 +98,12 @@ export default function Home({ products }) {
                 <option value="priceLow">PRICE : LOW TO HIGH</option>
               </select>
             </div>
+            
           </div>
+
+
+
+          
           <section className={styles.grid}>
             {paginatedProducts.length > 0 ? (
               paginatedProducts.map((product) => (
